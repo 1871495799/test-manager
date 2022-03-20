@@ -1,5 +1,4 @@
 package com.book.manager.service;
-
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import com.book.manager.dao.BookMapper;
@@ -13,15 +12,12 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * @Description 图书业务类
- * @Date 2020/7/14 16:31
- * @Author by 尘心
  */
 @Service
 public class BookService {

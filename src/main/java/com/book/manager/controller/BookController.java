@@ -1,5 +1,4 @@
 package com.book.manager.controller;
-
 import com.book.manager.entity.Book;
 import com.book.manager.service.BookService;
 import com.book.manager.util.R;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description 用户管理
- * @Date 2020/7/14 16:35
- * @Author by 尘心
  */
 @Api(tags = "图书管理")
 @RestController

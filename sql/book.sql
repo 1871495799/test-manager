@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localtest
-Source Server Version : 50712
+Source Server         : localhost
+Source Server Version : 80011
 Source Host           : localhost:3306
 Source Database       : book_manager
 
 Target Server Type    : MYSQL
-Target Server Version : 50712
+Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2020-07-28 19:49:03
+Date: 2022-03-20 15:55:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -57,59 +57,7 @@ INSERT INTO `book` VALUES ('17', '金庸', 'TLBB20200734', '《天龙八部2》'
 INSERT INTO `book` VALUES ('18', '金庸', 'TLBB20200735', '《天龙八部3》', '200', '34', '光线传媒出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');
 INSERT INTO `book` VALUES ('19', '金庸', 'TLBB20200736', '《天龙八部4》', '200', '34', '光线传媒出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');
 INSERT INTO `book` VALUES ('20', '金庸', 'TLBB20200737', '《天龙八部5》', '200', '35', '光线传媒出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');
-INSERT INTO `book` VALUES ('21', '刘同', 'DBS20200737', '《当悲伤逆流成河》', '200', '35', '光线传媒出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');
 INSERT INTO `book` VALUES ('22', '九把刀', 'NXN20200737', '《那些年我们一起追过的女孩》', '200', '35', '光线传媒出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');
 INSERT INTO `book` VALUES ('23', '鲁迅', 'KRRJ20200737', '《狂人日记》', '200', '35', '光线传媒出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');
 INSERT INTO `book` VALUES ('24', '鲁迅', 'NH20200737', '《呐喊》', '200', '35', '光线传媒出版社', '2020-07-15 20:20:06.523000', '99', '无', '文化、科学、教育、体育');
-INSERT INTO `book` VALUES ('25', '安妮', 'JA20200737', '《简爱》', '200', '35', '光线传媒出版社', '2020-07-15 20:20:06.523000', '99', '无', '文化、科学、教育、体育');
-
--- ----------------------------
--- Table structure for borrow
--- ----------------------------
-DROP TABLE IF EXISTS `borrow`;
-CREATE TABLE `borrow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `book_id` int(11) DEFAULT NULL,
-  `create_time` datetime(6) DEFAULT NULL,
-  `update_time` datetime(6) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `end_time` datetime(6) DEFAULT NULL,
-  `ret` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of borrow
--- ----------------------------
-INSERT INTO `borrow` VALUES ('13', '25', '2020-07-28 08:00:00.000000', '2020-07-29 08:00:00.000000', '4', '2020-07-29 08:00:00.000000', '1');
-INSERT INTO `borrow` VALUES ('14', '24', '2020-07-28 08:00:00.000000', '2020-07-29 08:00:00.000000', '4', '2020-07-29 08:00:00.000000', '1');
-
--- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  `birthday` datetime(6) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `identity` int(11) DEFAULT NULL,
-  `is_admin` int(11) DEFAULT NULL,
-  `nickname` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `size` int(11) DEFAULT NULL,
-  `tel` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO `users` VALUES ('1', '上海', 'string', '2020-07-14 19:01:33.863000', 'stu@163.com', '0', '1', '学生', '123', '2', '13576145550', 'stu');
-INSERT INTO `users` VALUES ('2', '上海', 'string', '2020-07-14 19:01:33.863000', 'tea@163.com', '1', '1', '教师', '123', '0', 'string', 'tea');
-INSERT INTO `users` VALUES ('3', '北京', 'a.jpg', '2020-07-14 19:01:33.863000', 'other@163.com', '2', '1', '社会人士', '123', '3', '15078826452', 'other');
-INSERT INTO `users` VALUES ('4', '北京', 'b.jpa', '2020-07-16 16:06:43.000000', 'admin@163.com', '3', '0', '管理员', '123', '3', '17679088880', 'admin');
-INSERT INTO `users` VALUES ('8', '北京朝阳', 'b.jpa', '1998-02-12 08:00:00.000000', 'guest01@163.com', '3', '1', '游客1', '123', '10', '13576008880', 'guest01');
-INSERT INTO `users` VALUES ('9', '北京', 'b.jpa', '1982-01-01 08:00:00.000000', 'guest02@163.com', '3', '1', '游客2', '123', '10', '1768220000', 'guest02');
+INSERT INTO `book` VALUES ('25', '安妮', 'JA20200737', '《简爱》', '200', '35', '光线传媒出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');

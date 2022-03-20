@@ -7,24 +7,19 @@ import com.book.manager.service.BorrowService;
 import com.book.manager.util.R;
 import com.book.manager.util.consts.Constants;
 import com.book.manager.util.http.CodeEnum;
-import com.book.manager.util.ro.RetBookIn;
 import com.book.manager.util.vo.BackOut;
 import com.book.manager.util.vo.BookOut;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @Description 用户管理
- * @Date 2020/7/14 16:35
- * @Author by 尘心
  */
 @Api(tags = "借阅管理")
 @RestController

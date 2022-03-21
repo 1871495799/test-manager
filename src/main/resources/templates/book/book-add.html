@@ -39,16 +39,21 @@
 			<form>
 				<!--文本框-->
 				<div class="unit clear">
-					<div class="left"><span class="required">*</span><p class="subtitle">书名</p></div>
+					<div class="left"><span class="required">*</span><p class="subtitle">用例名</p></div>
 					<div class="right">
-						<input type="text" id="bookName" class="text" placeholder="请输入图书名称" />
+						<input type="text" id="bookName" class="text" placeholder="请输入用例名称" />
 					</div>
 				</div>
 
 				<div class="unit clear">
-					<div class="left"><span class="required">*</span><p class="subtitle">ISBN编号</p></div>
+					<div class="left"><span class="required">*</span><p class="subtitle">请求方法</p></div>
 					<div class="right">
-						<input type="text" id="isbn" class="text" placeholder="ISBN编号" />
+						<!--<input type="text" id="isbn" class="text" placeholder="ISBN编号" />-->
+						<select id="select0">
+							<option value="">请选择</option>
+							<option value="1">GET</option>
+							<option value="2">POST</option>
+						</select>
 					</div>
 				</div>
 
@@ -61,15 +66,14 @@
 
 				<!--下拉选择框-->
 				<div class="unit clear">
-					<div class="left"><p class="subtitle">图书分类</p></div>
+					<div class="left"><p class="subtitle">项目分类</p></div>
 					<div class="right">
 						<select id="select">
 							<option value="">请选择</option>
-							<option value="1">马克思主义、列宁主义、毛泽东思想、邓小平理论</option>
-							<option value="2">哲学、宗教</option>
-							<option value="3">文化、科学、教育、体育</option>
-							<option value="4">政治、法律</option>
-							<option value="5">历史、地理</option>
+							<option value="1">商品</option>
+							<option value="2">营销</option>
+							<option value="3">交易</option>
+							<option value="4">订单</option>
 						</select>
 					</div>
 				</div>
@@ -139,11 +143,16 @@
 		isSearch : true,
 		maxNum: 5
 	});
+    javaex.select({
+        id : "select0",
+        isSearch : true,
+        maxNum: 5
+    });
 	
 	javaex.date({
 		id : "publishTime",	// 承载日期组件的id
 		isTime : true,
-		date : "2018-04-15 01:01:01",	// 选择的日期
+		date : "2022-03-15 01:01:01",	// 选择的日期
 		// 重新选择日期之后返回一个时间对象
 		callback : function(rtn) {
 		}

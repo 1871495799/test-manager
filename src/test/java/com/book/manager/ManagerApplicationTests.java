@@ -1,8 +1,8 @@
 package com.book.manager;
 
-import com.book.manager.entity.Book;
+import com.book.manager.entity.Cases;
 import com.book.manager.entity.Users;
-import com.book.manager.service.BookService;
+import com.book.manager.service.CasesService;
 import com.book.manager.service.UserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Date;
 public class ManagerApplicationTests {
 
 	@Autowired
-	private BookService bookService;
+	private CasesService bookService;
 
 	@Autowired
 	private UserService userService;
@@ -24,14 +24,14 @@ public class ManagerApplicationTests {
 	@Test
 	public void contextLoads() {
 		for (int i = 0; i < 15; i++) {
-			Book book = new Book();
+			Cases book = new Cases();
 			book.setIsbn("121312"+i);
 			book.setAuthor("Jason"+i);
 			book.setName("《高等数学必修》"+i);
 			book.setPages(150+i);
 			book.setPrice(15d+i);
 			book.setPublish("北京邮电出版社分社"+i);
-			book.setSize(i);
+//			book.setSize(i);
 			book.setTranslate("翻译者"+i);
 //			book.setType(0);
 			book.setPublishTime(new Date());

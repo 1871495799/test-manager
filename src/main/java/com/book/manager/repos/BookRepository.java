@@ -1,6 +1,6 @@
 package com.book.manager.repos;
 
-import com.book.manager.entity.Book;
+import com.book.manager.entity.Cases;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
  * @Author by 尘心
  */
 @Repository
-public interface BookRepository extends JpaRepository<Book,Integer> {
+public interface BookRepository extends JpaRepository<Cases,Integer> {
 
     /**
      * ISBN编码查询
      * @param isbn
      * @return
      */
-    Book findByIsbn(String isbn);
+    Cases findByIsbn(String isbn);
 }

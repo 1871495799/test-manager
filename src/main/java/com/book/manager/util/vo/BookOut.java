@@ -34,7 +34,7 @@ public class BookOut {
     private Double price;
 
     @ApiModelProperty("库存")
-    private Integer size;
+    private String size;
 
     @ApiModelProperty("分类")
     private String type;

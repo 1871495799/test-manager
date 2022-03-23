@@ -1,8 +1,8 @@
 package com.book.manager.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
-import com.book.manager.dao.BookMapper;
-import com.book.manager.entity.Book;
+import com.book.manager.dao.CasesMapper;
+import com.book.manager.entity.Cases;
 import com.book.manager.repos.BookRepository;
 import com.book.manager.util.vo.BookOut;
 import com.book.manager.util.vo.PageOut;
@@ -11,7 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +20,13 @@ import java.util.Optional;
  * @Description 图书业务类
  */
 @Service
-public class BookService {
+public class CasesService {
 
     @Autowired
     private BookRepository bookRepository;
 
     @Autowired
-    private BookMapper bookMapper;
+    private CasesMapper bookMapper;
 
 
     /**
@@ -34,7 +34,7 @@ public class BookService {
      * @param book 图书
      * @return 返回添加的图书
      */
-    public Book addBook(Book book) {
+    public Cases addBook(Cases book) {
         return bookRepository.saveAndFlush(book);
     }
 
@@ -43,7 +43,7 @@ public class BookService {
      * @param book 图书对象
      * @return true or false
      */
-    public boolean updateBook(Book book) {
+    public boolean updateBook(Cases book) {
         return bookMapper.updateBook(BeanUtil.beanToMap(book))>0;
     }
 
@@ -53,9 +53,9 @@ public class BookService {
      * @return 图书详情
      */
     public BookOut findBookById(Integer id) {
-        Optional<Book> optional = bookRepository.findById(id);
+        Optional<Cases> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
-            Book book = optional.get();
+            Cases book = optional.get();
             BookOut out = new BookOut();
             BeanUtil.copyProperties(book,out);
             out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));
@@ -64,8 +64,8 @@ public class BookService {
         return null;
     }
 
-    public Book findBook(Integer id) {
-        Optional<Book> optional = bookRepository.findById(id);
+    public Cases findBook(Integer id) {
+        Optional<Cases> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
             return optional.get();
         }
@@ -78,7 +78,7 @@ public class BookService {
      * @return
      */
     public BookOut findBookByIsbn(String isbn) {
-        Book book = bookRepository.findByIsbn(isbn);
+        Cases book = bookRepository.findByIsbn(isbn);
         BookOut out = new BookOut();
         if (book == null) {
             return out;
@@ -106,11 +106,11 @@ public class BookService {
     public PageOut getBookList(PageIn pageIn) {
 
         PageHelper.startPage(pageIn.getCurrPage(),pageIn.getPageSize());
-        List<Book> list = bookMapper.findBookListByLike(pageIn.getKeyword());
-        PageInfo<Book> pageInfo = new PageInfo<>(list);
+        List<Cases> list = bookMapper.findBookListByLike(pageIn.getKeyword());
+        PageInfo<Cases> pageInfo = new PageInfo<>(list);
 
         List<BookOut> bookOuts = new ArrayList<>();
-        for (Book book : pageInfo.getList()) {
+        for (Cases book : pageInfo.getList()) {
             BookOut out = new BookOut();
             BeanUtil.copyProperties(book,out);
             out.setPublishTime(DateUtil.format(book.getPublishTime(),"yyyy-MM-dd"));

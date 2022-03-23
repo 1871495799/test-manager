@@ -22,8 +22,8 @@ import java.util.Date;
 @DynamicUpdate
 @DynamicInsert
 @Entity
-@Table(name = "book")
-public class Book {
+@Table(name = "cases")
+public class Cases {
 
     @ApiModelProperty("主键")
     @Id
@@ -52,7 +52,7 @@ public class Book {
     private Double price;
 
     @ApiModelProperty("库存")
-    private Integer size;
+    private String size;
 
     @ApiModelProperty("分类")
     private String type;

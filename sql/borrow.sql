@@ -16,7 +16,7 @@ Date: 2022-03-20 15:56:12
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for borrow
+-- Table structure for suites
 -- ----------------------------
 DROP TABLE IF EXISTS `borrow`;
 CREATE TABLE `borrow` (
@@ -31,6 +31,6 @@ CREATE TABLE `borrow` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of borrow
+-- Records of suites
 -- ----------------------------
 INSERT INTO `borrow` VALUES ('14', '24', '2020-07-28 08:00:00.000000', '2020-07-29 08:00:00.000000', '4', '2020-07-29 08:00:00.000000', '1');

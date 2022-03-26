@@ -3,59 +3,60 @@
 <mapper namespace="com.book.manager.dao.CasesMapper">
     <resultMap id="BaseResultMap" type="com.book.manager.entity.Cases" >
         <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="isbn" property="isbn" jdbcType="VARCHAR" />
+        <result column="method" property="method" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="author" property="author" jdbcType="VARCHAR" />
-        <result column="pages" property="pages" jdbcType="INTEGER" />
-        <result column="translate" property="translate" jdbcType="VARCHAR" />
-        <result column="publish" property="publish" jdbcType="VARCHAR" />
-        <result column="price" property="price" jdbcType="INTEGER" />
-        <result column="size" property="size" jdbcType="INTEGER" />
+        <result column="json" property="json" jdbcType="VARCHAR" />
+        <result column="project" property="project" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
         <result column="type" property="type" jdbcType="VARCHAR" />
-        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <!-- 模糊查询 倒序 -->
-    <select id="findBookListByLike" resultMap="BaseResultMap" >
+    <select id="findCaseListByLike" resultMap="BaseResultMap" >
         select * from cases
         <where>
             <if test="_parameter != null and _parameter != ''">
-               and `name` like CONCAT('%',#{_parameter},'%') or `isbn` like CONCAT('%',#{_parameter},'%')
+               and `name` like CONCAT('%',#{_parameter},'%')
             </if>
         </where>
         order by id desc
     </select>
 
 
-    <update id="updateBook" parameterType="map">
+    <update id="updateCase" parameterType="map">
         update cases
         <set>
-            <if test="isbn != null and isbn != ''">
-                isbn = #{isbn},
+            <if test="method != null and method != ''">
+                method = #{method},
             </if>
+
+            <if test="author != null and author != ''">
+                author = #{author},
+            </if>
+
+
             <if test="name != null and name != ''">
                 `name` = #{name},
             </if>
-            <if test="pages != null">
-                pages = #{pages},
+
+            <if test="json != null and json != ''">
+                `json` = #{json},
             </if>
-            <if test="translate != null and translate != ''">
-                `translate` = #{translate},
+            <if test="project != null and project != ''">
+                project = #{project},
             </if>
-            <if test="publish != null and publish != ''">
-                publish = #{publish},
-            </if>
-            <if test="price != null">
-                price = #{price},
-            </if>
-            <if test="size != null">
-                `size` = #{size},
+
+            <if test="url != null">
+                `url` = #{url},
             </if>
             <if test="type != null and type != ''">
                 `type` = #{type},
             </if>
-            <if test="publishTime != null">
-                publish_time = #{publishTime},
+
+            <if test="createTime != null">
+                create_time = #{createTime},
             </if>
         </set>
         where id = #{id}

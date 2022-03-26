@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta charset="utf-8">
+	<!--字体图标-->
+	<link href="../../javaex/pc/css/icomoon.css" rel="stylesheet" />
+	<!--动画-->
+	<link href="../../javaex/pc/css/animate.css" rel="stylesheet" />
+	<!--骨架样式-->
+	<link href="../../javaex/pc/css/common.css" rel="stylesheet" />
+	<!--皮肤（缇娜）-->
+	<link href="../../javaex/pc/css/skin/tina.css" rel="stylesheet" />
+	<!--jquery，不可修改版本-->
+	<script src="../../javaex/pc/lib/jquery-1.7.2.min.js"></script>
+	<!--全局动态修改-->
+	<script src="../../javaex/pc/js/common.js"></script>
+	<!--核心组件-->
+	<script src="../../javaex/pc/js/javaex.min.js"></script>
+	<!--表单验证-->
+	<script src="../../javaex/pc/js/javaex-formVerify.js"></script>
+	<title>图书借阅</title>
+</head>
+<style>
+
+</style>
+
+<body>
+<!--全部主体内容-->
+<div class="list-content">
+	<!--块元素-->
+	<div class="block">
+		<!--修饰块元素名称-->
+		<div class="banner">
+			<p class="tab fixed">编辑计划</p>
+		</div>
+
+		<!--正文内容-->
+		<div class="main">
+			<form id="form">
+
+				<div class="unit clear">
+					<div class="left"><span class="required">*</span><p class="subtitle">计划名称</p></div>
+					<div class="right">
+						<input type="text" id="name" class="text" placeholder="请输入计划名称" />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">作者</p></div>
+					<div class="right">
+						<input type="text" id="author" class="text" placeholder="作者"  />
+					</div>
+				</div>
+
+				<div class="unit clear">
+					<div class="left"><span class="required"></span><p class="subtitle">时间</p></div>
+					<div class="right">
+						<!--不一定是input，可以使用div或span等其他元素-->
+						<input type="text" id="date2" class="ex-date" style="width: 220px;" value=""/>
+					</div>
+				</div>
+
+
+				<!--下拉选择框-->
+				<div class="unit clear">
+					<div class="left"><p class="subtitle">项目名称</p></div>
+					<div class="right">
+						<select id="select">
+							<option value="">请选择</option>
+							<option value="1">电商</option>
+							<option value="2">零售</option>
+						</select>
+					</div>
+				</div>
+
+				<table id="table" class="table color2">
+					<thead>
+					<tr align="center">
+						<th>全选
+							<input type="checkbox" id="j_cbAll" />
+						</th>
+						<th>序号</th>
+						<th>用例名</th>
+						<th>作者</th>
+						<th>请求方法</th>
+						<th>项目名称</th>
+						<th>创建时间</th>
+						<th>请求地址</th>
+						<th>项目分类</th>
+						<th style="display: none">id</th>
+					</tr>
+					</thead>
+					<tbody id="tbody"></tbody>
+				</table>
+				<div class="page">
+					<ul id="page" class="pagination"></ul>
+				</div>
+
+				<!--提交按钮-->
+				<div class="unit clear" style="width: 800px;">
+					<div style="text-align: center;">
+						<!--表单提交时，必须是input元素，并指定type类型为button，否则ajax提交时，会返回error回调函数-->
+						<input type="button" id="return" class="button no" value="返回" />
+						<input type="button" id="save" class="button yes" value="创建" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+    javaex.select({
+        id : "select",
+        isSearch : true,
+        maxNum: 5
+    });
+
+
+
+    var id =0;
+    // 页面一加载赋值表单
+    $(document).ready(function(){
+        // 地址栏参数
+        id = getQueryVariable("id");
+        // get读取参数
+        $.get("/suites/detail",{"id": id}, function(data){
+            var data = data.data;
+            console.log(data);
+            // 页面一加载, 读取登录用户信息
+
+            $("#name").val(data.name);
+            $("#author").val(data.author);
+            $("#data2").val(data.createTime);
+            var caseId = data.caseId
+            // 默认查询所有
+            rander(1,"",10,caseId);
+
+        });
+    });
+
+
+
+
+    // 渲染数据表格
+    function rander(currPage,keyword,pageSize,caseId) {
+        // 定义全局 分页属性
+        $.ajax({
+            //请求方式
+            type : "POST",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url : "/cases/list",
+            //数据，json字符串
+            data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize}),
+            //请求成功
+            success : function(result) {
+                console.log(result);
+                // 获取集合属性
+                var r = result.data;
+                var total = r.total;
+                var currPage = r.currPage;
+                var pageSize = r.pageSize;
+                // 分页信息
+                console.log("currPage:"+r.currPage+"\t pageSize:"+r.pageSize+"\t total:"+r.total);
+
+                var array = r.list;
+                var text = "";
+                $.each(array,function(index,value){
+                    console.log("value : "+value.toString());
+                    var idx =value.id
+                    console.log("idx : "+idx);
+                    console.log("caseId : "+caseId.toString());
+                    var num = pageSize * (currPage - 1) + index + 1;
+
+                    if( caseId.includes(idx)){
+                        text+= "<tr align='center'> <td> <input type='checkbox' checked='true' id="+value.id+"> </td><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.method+"</td>" +
+                            "<td>"+value.project+"</td><td>"+value.createTime+"</td><td>"+value.url+"</td><td>"+value.type+"</td><td style='display: none'>"+idx+"</td></tr>";
+					}else {
+                        text+= "<tr align='center'> <td> <input type='checkbox' id="+value.id+"> </td><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.method+"</td>" +
+                            "<td>"+value.project+"</td><td>"+value.createTime+"</td><td>"+value.url+"</td><td>"+value.type+"</td><td style='display: none'>"+idx+"</td></tr>";
+					}
+
+                });
+
+                $("#tbody").html(text);
+
+                // 向上取整去总页数
+                var totalPage = Math.ceil(total/pageSize);
+                console.log("totalPage:"+totalPage);
+                // 清空分页组件
+                $("#page").empty();
+                // 调用分页组件
+                javaex.page({
+                    id : "page",
+                    pageCount : totalPage,	// 总页数
+                    currentPage : currPage,// 默认选中第几页
+                    perPageCount : pageSize ,	// 每页显示多少条，不填时，不显示该条数选择控件
+                    isShowJumpPage : false,	// 是否显示跳页
+                    totalNum : total,		// 总条数，不填时，不显示
+                    position : "center",
+                    callback : function(rtn) {
+                        // 翻页
+                        rander(rtn.pageNum,keyword,rtn.perPageCount,caseId);
+                        $("#j_cbAll").click()
+                    }
+                });
+
+            },
+            //请求失败，包含具体的错误信息
+            error : function(e){
+                console.log(e.status);
+                console.log(e.responseText);
+            }
+        });
+    }
+
+
+
+    javaex.date({
+        id : "date2",	// 承载日期组件的id
+        isTime : true,
+        date : "2022-03-15 01:01:01",	// 选择的日期
+        // 重新选择日期之后返回一个时间对象
+        callback : function(rtn) {
+        }
+    });
+
+
+
+    $("#j_cbAll").click(function() {
+        var j_cbAll = document.getElementById('j_cbAll'); // 全选按钮
+        var j_tbs = document.getElementById('tbody').getElementsByTagName('input'); // 下面所有的复选框
+        // 全选事件
+        // this.checked 它可以得到当前复选框的选中状态，如果是true就是选中，如果是false就是未选中
+        for(var i = 0; i < j_tbs.length; i++) {
+            console.log(j_tbs[i])
+            j_tbs[i].checked = this.checked;
+        }
+
+        // 2.下面复选框需要全部选中，上面全选才能选中做法：给下面所以复选框绑定点击事件，每次点击，
+        // 都要循环查看下面所有的复选框是否有没选中的，上面全选就不选中。
+        for(var i = 0; i < j_tbs.length; i++) {
+            // 遍历为每个小按钮绑定事件
+            console.log(j_tbs[i])
+            j_tbs[i].onclick = function () {
+                // flag 控制全选按钮是否选中
+                var flag = true;
+                // 每次点击下面的复选框都要循环检查这4个小按钮是否选中
+                for(var i = 0; i < j_tbs.length; i++) {
+                    if (!j_tbs[i].checked) {
+                        // j_cbAll.checked = false;
+                        flag = false;
+                        break; // 退出for循环，这样可以提高执行效率，因为只要有一个没有选中，剩下的就无需循环判断了
+                    }
+                }
+                j_cbAll.checked = flag;
+            }
+        };
+    })
+
+
+    // 监听点击保存按钮事件
+    $("#save").click(function() {
+
+        var name = $("#name").val();
+        var author = $("#author").val();
+        var createTime = $("#createTime").val();
+        var select = $('#select option:selected').text();
+        var userId = 0;
+        var caseId = getChecked();
+
+        if (name == null||name == "") {
+            javaex.optTip({
+                content : "请输入计划名称!",
+                type : "error"
+            });
+            return false;
+        }
+
+
+        // 先获取当前登录用户信息
+        $.get("/user/currUser", function(data){
+            var user = data.data;
+            userId = user.id;
+            console.log(userId);
+            if (userId >0) {
+                var json = {"id":id,"userId":userId,"name":name,"updateTime":createTime,"author":author,"caseId":caseId,"project":select};
+                $.ajax({
+                    //请求方式
+                    type : "POST",
+                    //请求的媒体类型
+                    contentType: "application/json;charset=UTF-8",
+                    //请求地址
+                    url : "/suites/update",
+                    //数据，json字符串
+                    data : JSON.stringify(json),
+                    //请求成功
+                    success : function(result) {
+                        console.log(result);
+                        // 获取集合属性
+                        var data = result.data;
+                        var code = result.code;
+                        var msg = result.msg;
+
+                        if (code == 200) {
+                            javaex.message({
+                                content : "修改成功",
+                                type : "success"
+                            });
+                            // 跳转至列表
+                            setTimeout(function(){window.location.href="/suites/suite-list";},1800)
+                        }else{
+                            javaex.message({
+                                content : msg,
+                                type : "error"
+                            });
+                            setTimeout(function(){},1500)
+                        }
+
+                    },
+                    //请求失败，包含具体的错误信息
+                    error : function(e){
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                });
+            }else {
+                // 找不到用户, 不可进行借阅操作
+                javaex.message({
+                    content : "登录信息已失效, 请登录后借阅",
+                    type : "error"
+                });
+            }
+        });
+
+    });
+
+
+    /**获取选中的checkbox值*/
+    function getChecked(){
+        var ids = [];
+        $("tbody input:checkbox:checked").each(function(i){
+            ids.push($(this)[0].id);
+        });
+        return ids.toString();
+    };
+
+
+    // 监听点击返回按钮事件
+    $("#return").click(function() {
+        // alert("返回");
+        window.location.href = "/suites/suite-list";
+    });
+
+    // 日期格式化
+    function dateFormat(fmt, date) {
+        var ret;
+        var opt = {
+            "Y+": date.getFullYear().toString(),        // 年
+            "m+": (date.getMonth() + 1).toString(),     // 月
+            "d+": date.getDate().toString(),            // 日
+            "H+": date.getHours().toString(),           // 时
+            "M+": date.getMinutes().toString(),         // 分
+            "S+": date.getSeconds().toString()          // 秒
+            // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (var k in opt) {
+            ret = new RegExp("(" + k + ")").exec(fmt);
+            if (ret) {
+                fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+            }
+        }
+        return fmt;
+    }
+
+
+    // 获取地址栏参数
+    function getQueryVariable(variable){
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return false;
+    }
+
+</script>
+</body>
+</html>

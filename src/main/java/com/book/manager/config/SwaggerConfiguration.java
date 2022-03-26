@@ -13,8 +13,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @Description swagger 配置
- * @Date 2020/7/14 18:36
- * @Author by 尘心
+ * @Date 2022/3/22 18:36
+ * @Author by 曾辉
  */
 @Configuration
 @EnableSwagger2
@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.book.manager.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.cases.manager.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

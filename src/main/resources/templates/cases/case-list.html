@@ -56,26 +56,17 @@
 				<thead>
 					<tr align="center">
 						<th>序号</th>
-						<th>用例名</th>
+						<th>用例名称</th>
 						<th>作者</th>
 						<th>请求方法</th>
-						<!--<th>页数</th>-->
-						<!--<th>定价</th>-->
 						<th>项目名称</th>
 						<th>创建时间</th>
 						<th>请求地址</th>
-						<!--<th>翻译</th>-->
 						<th>项目分类</th>
 						<th>操作</th>
 					</tr>
 				</thead>
-				<tbody id="tbody">
-					<!--<tr>-->
-						<!--<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>-->
-						<!--<td>1</td>-->
-						<!--<td><button class="button blue">编辑</button><button class="button red">删除</button></td>-->
-					<!--</tr>-->
-				</tbody>
+				<tbody id="tbody"></tbody>
             </table>
             
             <div class="page">
@@ -103,7 +94,7 @@
             //请求的媒体类型
             contentType: "application/json;charset=UTF-8",
             //请求地址
-            url : "/book/list",
+            url : "/cases/list",
             //数据，json字符串
             data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize}),
             //请求成功
@@ -122,10 +113,9 @@
                 $.each(array,function(index,value){
                     console.log(value);
                    var num = pageSize * (currPage - 1) + index + 1;
-                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.isbn+"</td>" +
-                        // "<td>"+value.pages+"</td><td>"+value.price+"</td>" +
-						"<td>"+value.publish+"</td><td>"+value.publishTime+"</td>" +
-                        "<td>"+value.size+"</td><td>"+value.type+"</td><td>"+
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.method+"</td>" +
+						"<td>"+value.project+"</td><td>"+value.createTime+"</td>" +
+                        "<td>"+value.url+"</td><td>"+value.type+"</td><td>"+
                         "<button class='button blue empty' onclick='updateBook("+value.id+")'>编辑</button> &nbsp;<button class='button yellow empty' onclick='delBook("+value.id+")'>删除</button></td></tr>";
                 });
 
@@ -170,7 +160,7 @@
     // 编辑
     function updateBook(id) {
 	    console.log("update Book"+id);
-		window.location.href="/book/book-update?id="+id;
+		window.location.href="/cases/case-update?id="+id;
     }
 
     // 删除
@@ -184,7 +174,7 @@
 
     function delCallback(id) {
 		// ajax
-        $.get("/book/delete",{"id": id},
+        $.get("/cases/delete",{"id": id},
             function(data){
                 var code = data.code;
                 if (code == 200) {

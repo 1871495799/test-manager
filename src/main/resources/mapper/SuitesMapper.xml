@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.book.manager.dao.BorrowMapper">
-    <resultMap id="BaseResultMap" type="com.book.manager.entity.Borrow" >
+<mapper namespace="com.book.manager.dao.SuitesMapper">
+    <resultMap id="BaseResultMap" type="com.book.manager.entity.Suites" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="user_id" property="userId" jdbcType="INTEGER" />
-        <result column="book_id" property="bookId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="project" property="project" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-        <result column="ret" property="ret" jdbcType="INTEGER" />
+        <result column="caseId" property="caseId" jdbcType="VARCHAR" />
     </resultMap>
 
+    <!-- 模糊查询 倒序 -->
+    <select id="findSuiteListByLike" resultMap="BaseResultMap" >
+        select * from suites
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                and `name` like CONCAT('%',#{_parameter},'%') or `author` like CONCAT('%',#{_parameter},'%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
     <update id="updateBor" parameterType="map">
-        update borrow
+        update suites
         <set>
             <if test="userId != null">
               user_id = #{userId},

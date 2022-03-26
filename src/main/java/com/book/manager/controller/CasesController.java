@@ -10,55 +10,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @Description 用户管理
+ * @Description 用例管理
  */
-@Api(tags = "图书管理")
+@Api(tags = "用例管理")
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/cases")
 public class CasesController {
 
     @Autowired
     private CasesService bookService;
 
-    @ApiOperation("图书搜索列表")
+    @ApiOperation("用例搜索列表")
     @PostMapping("/list")
-    public R getBookList(@RequestBody PageIn pageIn) {
+    public R getCaseList(@RequestBody PageIn pageIn) {
         if (pageIn == null) {
             return R.fail(CodeEnum.PARAM_ERROR);
         }
-
-        return R.success(CodeEnum.SUCCESS,bookService.getBookList(pageIn));
+        return R.success(CodeEnum.SUCCESS,bookService.getCaseList(pageIn));
     }
 
     @ApiOperation("添加")
     @PostMapping("/add")
-    public R addBook(@RequestBody Cases book) {
-        return R.success(CodeEnum.SUCCESS,bookService.addBook(book));
+    public R addCase(@RequestBody Cases cases) {
+        return R.success(CodeEnum.SUCCESS,bookService.addCase(cases));
     }
 
     @ApiOperation("编辑")
     @PostMapping("/update")
-    public R modifyBook(@RequestBody Cases book) {
-        return R.success(CodeEnum.SUCCESS,bookService.updateBook(book));
+    public R modifyCase(@RequestBody Cases cases) {
+        return R.success(CodeEnum.SUCCESS,bookService.updateCase(cases));
     }
 
 
     @ApiOperation("详情")
     @GetMapping("/detail")
-    public R bookDetail(Integer id) {
-        return R.success(CodeEnum.SUCCESS,bookService.findBookById(id));
-    }
-
-    @ApiOperation("详情 根据ISBN获取")
-    @GetMapping("/detailByIsbn")
-    public R bookDetailByIsbn(String isbn) {
-        return R.success(CodeEnum.SUCCESS,bookService.findBookByIsbn(isbn));
+    public R CaseDetail(Integer id) {
+        return R.success(CodeEnum.SUCCESS,bookService.findCaseById(id));
     }
 
     @ApiOperation("删除")
     @GetMapping("/delete")
-    public R delBook(Integer id) {
-        bookService.deleteBook(id);
+    public R delCase(Integer id) {
+        bookService.deleteCase(id);
         return R.success(CodeEnum.SUCCESS);
     }
 

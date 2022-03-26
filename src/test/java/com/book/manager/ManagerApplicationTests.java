@@ -25,17 +25,17 @@ public class ManagerApplicationTests {
 	public void contextLoads() {
 		for (int i = 0; i < 15; i++) {
 			Cases book = new Cases();
-			book.setIsbn("121312"+i);
+			book.setMethod("121312"+i);
 			book.setAuthor("Jason"+i);
 			book.setName("《高等数学必修》"+i);
-			book.setPages(150+i);
-			book.setPrice(15d+i);
-			book.setPublish("北京邮电出版社分社"+i);
-//			book.setSize(i);
-			book.setTranslate("翻译者"+i);
-//			book.setType(0);
-			book.setPublishTime(new Date());
-			bookService.addBook(book);
+//			book.setPages(150+i);
+//			book.setPrice(15d+i);
+			book.setProject("北京邮电出版社分社"+i);
+//			cases.setSize(i);
+//			book.setTranslate("翻译者"+i);
+//			cases.setType(0);
+			book.setCreateTime(new Date());
+//			bookService.addBook(book);
 
 			Users user = new Users();
 			user.setSize(i);

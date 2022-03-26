@@ -9,7 +9,7 @@ import lombok.Data;
  * @Author by 尘心
  */
 @Data
-public class BackOut extends BookOut{
+public class BackOut extends CasesOut {
 
     @ApiModelProperty("借阅时间")
     private String borrowTime;

@@ -16,7 +16,7 @@ Date: 2022-03-20 15:55:58
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for book
+-- Table structure for cases
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book` (
@@ -35,7 +35,7 @@ CREATE TABLE `book` (
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of book
+-- Records of cases
 -- ----------------------------
 INSERT INTO `book` VALUES ('1', '盐野七生', 'XKR000001', '《希腊人的故事》', '300', '61', '光明日报出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');
 INSERT INTO `book` VALUES ('2', '陈寿', 'CS20200728', '《三国志》', '200', '21', '光明日报出版社', '2020-07-15 20:20:06.523000', '100', '无', '文化、科学、教育、体育');

@@ -17,5 +17,5 @@ public interface BookRepository extends JpaRepository<Cases,Integer> {
      * @param isbn
      * @return
      */
-    Cases findByIsbn(String isbn);
+    Cases findByMethod(String isbn);
 }

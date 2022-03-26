@@ -17,12 +17,12 @@ public interface CasesMapper {
      * @param keyword 关键字
      * @return
      */
-    List<Cases> findBookListByLike(String keyword);
+    List<Cases> findCaseListByLike(String keyword);
 
     /**
      * 编辑用户
      * @param map
      * @return
      */
-    int updateBook(Map<String, Object> map);
+    int updateCase(Map<String, Object> map);
 }

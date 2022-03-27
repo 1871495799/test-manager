@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.book.manager.dao.CasesMapper">
-    <resultMap id="BaseResultMap" type="com.book.manager.entity.Cases" >
+<mapper namespace="com.manager.dao.CasesMapper">
+    <resultMap id="BaseResultMap" type="com.manager.entity.Cases" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="method" property="method" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR" />

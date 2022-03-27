@@ -49,6 +49,7 @@
 					<th>序号</th>
 					<th>计划名称</th>
 					<th>作者</th>
+					<th>创建时间</th>
 					<th>分类</th>
 					<th>操作</th>
 				</tr>
@@ -69,12 +70,22 @@
 
     // 页面一加载, 展示数据列表, 每页10条
     $(document).ready(function(){
-        // 默认查询所有
-        rander(1,"",10);
+        // 先获取当前登录用户信息
+        $.get("/user/currUser", function(data) {
+            var user = data.data;
+            var userId = user.id;
+            console.log(userId);
+            // 默认查询所有
+            rander(1,"",10,userId);
+        });
+
     });
 
+
+
+
     // 渲染数据表格
-    function rander(currPage,keyword,pageSize) {
+    function rander(currPage,keyword,pageSize,userId) {
         // 定义全局 分页属性
         var total = 0;
         $.ajax({
@@ -102,11 +113,13 @@
                 var text = "";
                 $.each(array,function(index,value){
                     console.log(value);
+                    console.log("userId : "+userId);
                     var num = pageSize * (currPage - 1) + index + 1;
-                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.project+"</td><td>"+
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.createTime+"</td><td>"+value.project+"</td><td>"+
                         "<button class='button blue empty' onclick='updateSuite("+value.id+")'>编辑</button> &nbsp;" +
 						"<button class='button blue empty' onclick='delSuite("+value.id+")'>删除</button> &nbsp;" +
-						"<button class='button yellow empty' onclick='runSuite("+value.id+")'>运行</button></td></tr>";
+						// "<button class='button yellow empty' onclick='runSuite("+value.id+")'>运行</button></td></tr>";
+                        "<button class='button yellow empty' onclick='runSuite("+value.id+","+userId+")'>运行</button></td></tr>";
                 });
 
                 $("#tbody").html(text);
@@ -190,18 +203,18 @@
     }
 
     // 运行
-    function runSuite(id) {
-        console.log("run Suite"+id);
+    function runSuite(id,userId) {
+        console.log("run Suite");
         javaex.confirm({
             content : "确定要运行么",
-            callback : "runSuite("+id+")"
+            callback : 'runSuite('+id+','+userId+')'
         });
     }
 
 
-    function runSuite(id) {
+    function runSuite(id,userId) {
         // ajax
-        $.get("/suites/run",{"id": id},
+        $.get("/suites/run",{"id": id,"userId": userId},
             function(data){
                 var code = data.code;
                 if (code == 200) {

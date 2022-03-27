@@ -27,7 +27,7 @@
 	<!--块元素-->
 	<div class="block">
 		<!--页面有多个表格时，可以用于标识表格-->
-		<h2>报告详情</h2>
+		<h2>测试报告</h2>
 		<!--右上角的返回按钮-->
 		<a href="javascript:history.back();">
 			<button class="button indigo radius-3" style="position: absolute;right: 20px;top: 16px;"><span class="icon-arrow_back"></span> 返回</button>
@@ -36,32 +36,22 @@
 		<!--正文内容-->
 		<div class="main">
 			<!--表格上方的搜索操作-->
-			<div class="admin-search">
-				<div class="input-group">
-					<input id="keyword" type="text" class="text" placeholder="搜索用户名或者昵称" />
-					<button id="searchBtn" class="button blue" onclick="search();">搜索</button>
-				</div>
+			<div class="admin-search" style="text-align: center">
+				<div class="input-group" style="font-size: 30px;text-align: center;font-weight: bold">自动化测试结果</div>
 			</div>
 
-			<!--表格上方的操作元素，添加、删除等-->
 			<table id="table" class="table color2">
 				<thead>
 				<tr align="center">
 					<th>序号</th>
-					<th>运行人员</th>
-					<th>测试计划</th>
-					<th>用户名称</th>
-					<th>运行日期</th>
-					<th>操作</th>
+					<th>用例名称</th>
+					<th>请求方法</th>
+					<th>请求地址</th>
+					<th>创建时间</th>
+					<th>结果</th>
 				</tr>
 				</thead>
-				<tbody id="tbody">
-				<tr>
-				<!--<td class="checkbox"><input type="checkbox" class="fill listen-1-2" /> </td>-->
-				<!--<td>1</td>-->
-				<!--<td><button class="button blue">编辑</button><button class="button red">删除</button></td>-->
-				</tr>
-				</tbody>
+				<tbody id="tbody"></tbody>
 			</table>
 
 			<div class="page">
@@ -75,12 +65,14 @@
 <script>
     // 页面一加载, 展示数据列表, 每页10条
     $(document).ready(function(){
+        // 地址栏参数
+        id = getQueryVariable("id");
         // 默认查询所有
-        rander(1,"",10);
+        rander(1,"",100,id);
     });
 
     // 渲染数据表格
-    function rander(currPage,keyword,pageSize) {
+    function rander(currPage,keyword,pageSize,id) {
         // 定义全局 分页属性
         $.ajax({
             //请求方式
@@ -88,9 +80,9 @@
             //请求的媒体类型
             contentType: "application/json;charset=UTF-8",
             //请求地址
-            url : "/report/list",
+            url : "/report/report/list",
             //数据，json字符串
-            data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize}),
+            data : JSON.stringify({"currPage":currPage,"keyword": keyword,"pageSize": pageSize,"reportId": id}),
             //请求成功
             success : function(result) {
                 console.log(result);
@@ -107,11 +99,10 @@
                 $.each(array,function(index,value){
                     console.log(value);
                     var num = pageSize * (currPage - 1) + index + 1;
-                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.userName+"</td><td>"+value.name+"</td><td>"+value.author+"</td><td>"+value.createTime+"</td>" +
+                    text+= "<tr align='center'><td>"+num+"</td><td>"+value.name+"</td><td>"+value.method+"</td><td>"+value.url+"</td><td>"+value.createTime+"</td>" +
                         // "<td>"+value.tel+"</td><td>"+value.email+"</td><td>"+value.address+"</td><td>"+value.size+"</td>" +
                         // "<td>"+value.ident+"</td>" +
-						"<td>"+
-                        "<button class='button blue empty' onclick='updateBook("+value.id+")'>查看</button> &nbsp;<button class='button yellow empty' onclick='delBook("+value.id+")'>删除</button></td></tr>";
+						"<td><button class='button blue empty'>"+value.status+"</button></td></tr>";
                 });
 
                 $("#tbody").html(text);
@@ -142,50 +133,21 @@
                 console.log(e.responseText);
             }
         });
+    };
+
+
+    // 获取地址栏参数
+    function getQueryVariable(variable){
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return false;
     }
 
-    // 搜索
-    function search() {
-        // 获取搜索关键字
-        var keyword = $("#keyword").val();
-        // 搜索结果渲染表格
-        rander(1,keyword,10);
-    }
 
-    // 编辑
-    function updateBook(id) {
-        console.log("update report"+id);
-        window.location.href="/report/report?id="+id;
-    }
-
-    // 删除
-    function delBook(id) {
-        console.log("delete report"+id);
-        javaex.confirm({
-            content : "确定要删除么",
-            callback : "delCallback("+id+")"
-        });
-    }
-
-    function delCallback(id) {
-        // ajax
-        $.get("/report/delete",{"id": id},
-            function(data){
-                var code = data.code;
-                if (code == 200) {
-                    javaex.message({
-                        content : "删除成功",
-                        type : "success"
-                    });
-
-                    // 删除成功刷新页面
-                    setTimeout(function(){window.location.reload();},1500)
-
-                }
-            });
-        // 如果你想阻止弹出层关闭，直接 return false; 即可
-        //return false;
-    }
 </script>
 </body>
 </html>

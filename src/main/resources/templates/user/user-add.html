@@ -79,9 +79,9 @@
 					<div class="right">
 						<select id="select">
 							<option value="">请选择</option>
-							<option value="0">学生</option>
-							<option value="1">教师</option>
-							<option value="2">校外人士</option>
+							<option value="0">普通测试</option>
+							<option value="1">leader</option>
+							<option value="2">经理</option>
 							<option value="3">管理员</option>
 						</select>
 					</div>
@@ -101,12 +101,6 @@
 					</div>
 				</div>
 
-				<div class="unit clear">
-					<div class="left"><span class="required"></span><p class="subtitle">可借数量</p></div>
-					<div class="right">
-						<input type="text" class="text" id="size" name="size"/>
-					</div>
-				</div>
 				<br>
 				<br>
 
@@ -140,7 +134,7 @@
 		var tel = $("#tel").val();
 		var email = $("#email").val();
 		var address = $("#address").val();
-		var size = $("#size").val();
+		// var size = $("#size").val();
         var identity = $('#select option:selected').val();// 身份
 
 		if (nickname == ""||nickname.length>12) {
@@ -167,7 +161,7 @@
             return false;
         }
 
-		var json = {"nickname":nickname,"username":username,"password":password,"birthday":birthday,"tel":tel,"email":email,"address":address,"size":size,"identity":identity};
+		var json = {"nickname":nickname,"username":username,"password":password,"birthday":birthday,"tel":tel,"email":email,"address":address,"identity":identity};
         $.ajax({
             //请求方式
             type : "POST",

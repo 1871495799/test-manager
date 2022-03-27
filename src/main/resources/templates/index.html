@@ -60,24 +60,22 @@
                                 <a href="javascript:;">测试用例<i class="icon-keyboard_arrow_left"></i></a>
                                 <ul>
 									<li><a id="book-list" href="javascript:page('cases/case-list');">用例列表</a></li>
-									<li><a id="add-book" href="javascript:page('cases/case-add');">创建用例</a></li>
+									<li><a id="add-case" href="javascript:page('cases/case-add');">创建用例</a></li>
 								</ul>
                             </li>
                             
 							<li class="menu-item">
 								<a href="javascript:;">测试计划<i class="icon-keyboard_arrow_left"></i></a>
 								<ul>
-									<li><a id="book-search" href="javascript:page('suites/suite-list');">计划列表</a></li>
-                                    <li><a id="book-borrow" href="javascript:page('suites/suite-add');">创建计划</a></li>
-                                    <!--<li><a id="cases-back" href="javascript:page('suites/back');">归还图书</a></li>-->
+									<li><a id="suite-list" href="javascript:page('suites/suite-list');">计划列表</a></li>
+                                    <li><a id="add-suite" href="javascript:page('suites/suite-add');">创建计划</a></li>
 								</ul>
                             </li>
 
                             <li class="menu-item">
 								<a href="javascript:;">测试报告<i class="icon-keyboard_arrow_left"></i></a>
 								<ul>
-									<li><a id="reader-list" href="javascript:page('report/report-list');">报告列表</a></li>
-                                    <!--<li><a id="report-add" href="javascript:page('report/report-add');">读者添加</a></li>-->
+									<li><a id="report-list" href="javascript:page('report/report-list');">报告列表</a></li>
 								</ul>
                             </li>
                             
@@ -142,8 +140,7 @@
                 if (auth != 0) {
                     console.log(auth);
                     // 若为普通用户权限, 则无法访问修改类菜单 无法添加图书,添加读者,管理用户以及添加管理员
-					$("#add-book").hide();
-					$("#reader-add").hide();
+					$("#add-suite").hide();
 					$("#user-manage").hide();
 					$("#admin-add").hide();
 				}
